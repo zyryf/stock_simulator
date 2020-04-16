@@ -1,12 +1,37 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <b-navbar type="dark" variant="dark" id="nav">
+      <b-navbar-nav>
+        <b-nav-item><router-link to="/">Home</router-link></b-nav-item>
+        <b-nav-item>
+          <router-link to="/portfolio">Portfolio</router-link></b-nav-item
+        >
+        <b-nav-item> <router-link to="/stocks">Stocks</router-link></b-nav-item>
+      </b-navbar-nav>
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item class="mx-3"> End day</b-nav-item>
+        <b-nav-item-dropdown class="mx-3" text="Save and Load">
+          <b-dropdown-item href="#">Save</b-dropdown-item>
+          <b-dropdown-item href="#">Load</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item disabled class="mx-3 founds">
+          Founds {{ displayFounds }}
+        </b-nav-item></b-navbar-nav
+      >
+    </b-navbar>
+
+    <router-view />
   </div>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["displayFounds"])
+  }
+};
+</script>
 
 <style>
 #app {
@@ -15,18 +40,38 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 #nav {
-  padding: 30px;
+  padding: 15px 30px;
+  font-size: 1.3em;
+  margin: 50px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
 }
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  color: #f3f3f3;
+}
+
+#nav a:hover {
+  text-decoration: none;
+}
+.founds .nav-link {
+  color: #bbb !important;
 }
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.dropdown-menu {
+  background-color: #343a40 !important;
+}
+
+.dropdown-item:hover {
+  background-color: #46484b !important;
 }
 </style>
