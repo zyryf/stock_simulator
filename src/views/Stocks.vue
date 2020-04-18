@@ -4,18 +4,32 @@
     <hr />
     <br />
     <b-container>
-      <b-col lg="6">
-        <Stock />
-      </b-col>
+      <b-row>
+        <b-col
+          cols="12"
+          lg="6"
+          v-for="(stock, index) in getStocks"
+          :key="index"
+        >
+          <Stock :stock="stock" />
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Stock from "../components/Stock.vue";
 export default {
   components: {
     Stock
+  },
+  computed: {
+    ...mapGetters(["getStocks"])
   }
 };
 </script>
+
+<style scoped>
+</style>

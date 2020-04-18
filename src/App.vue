@@ -9,7 +9,7 @@
         <b-nav-item> <router-link to="/stocks">Stocks</router-link></b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item class="mx-3"> End day</b-nav-item>
+        <b-nav-item class="mx-3" @click="endDay"> End day</b-nav-item>
         <b-nav-item-dropdown class="mx-3" text="Save and Load">
           <b-dropdown-item href="#">Save</b-dropdown-item>
           <b-dropdown-item href="#">Load</b-dropdown-item>
@@ -26,9 +26,18 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { mapMutations } from "vuex";
 export default {
-  computed: {
-    ...mapGetters(["displayFounds"])
+  computed: { ...mapGetters(["displayFounds"]) },
+  methods: {
+    ...mapGetters(["getStocks"]),
+    ...mapMutations(["updateStocks", "newPrices"]),
+    endDay() {
+      this.newPrices();
+      const stocks = this.getStocks();
+
+      this.updateStocks(stocks);
+    }
   }
 };
 </script>
