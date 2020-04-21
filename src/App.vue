@@ -10,17 +10,15 @@
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-item class="mx-3" @click="endDay"> End day</b-nav-item>
-        <b-nav-item-dropdown class="mx-3" text="Save and Load">
-          <b-dropdown-item href="#">Save</b-dropdown-item>
-          <b-dropdown-item href="#">Load</b-dropdown-item>
-        </b-nav-item-dropdown>
+
         <b-nav-item disabled class="mx-3 founds">
           Founds {{ displayFounds }}
         </b-nav-item></b-navbar-nav
       >
     </b-navbar>
-
-    <router-view />
+    <transition name="hide" mode="out-in">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -28,9 +26,16 @@
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
 export default {
-  computed: { ...mapGetters(["displayFounds"]) },
+  data() {
+    return {
+      savedStocks: []
+    };
+  },
+  computed: {
+    ...mapGetters(["displayFounds"])
+  },
   methods: {
-    ...mapGetters(["getStocks"]),
+    ...mapGetters(["getStocks", "get_myStocks"]),
     ...mapMutations(["updateStocks", "newPrices"]),
     endDay() {
       this.newPrices();
@@ -82,5 +87,24 @@ export default {
 
 .dropdown-item:hover {
   background-color: #46484b !important;
+}
+.hide-enter {
+  opacity: 0;
+  transform: translateY(75px);
+}
+
+.hide-enter-active {
+  transition: 0.35s;
+}
+
+.hide-leave {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.hide-leave-active {
+  transition: 0.35s;
+  opacity: 0;
+  transform: translateY(75px);
 }
 </style>
